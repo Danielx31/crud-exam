@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Vue Js Product CRUD</title>
+  </head>
+  <body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">CRUD</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Order</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h1 class="page-header text-center">VueJs CRUD</h1>
+      <div id="vuejscrudproduct">
+        <div class="col-md-8 offset-md-2">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Products List
+                <button class="btn btn-primary float-right" @click="showAddModal = true">Add Product</button>
+              </h2>
+            </div>
+          </div>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Product Name</th>
+              <th>Decription</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <tr v-for="product in products" :key="product.id">
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.product_description }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                  <!-- <button class="btn btn-primary" @click="showEditModal = true; selectProduct(product)" :disabled="product.disabled">Edit</button>
+                  <button class="btn btn-success" @click="enable(product)">Enable</button>
+                  <button class="btn btn-danger" @click="disable(product)">Disable</button> -->
+                  <button class="btn btn-primary" @click="showEditModal = true; selectProduct(product)" v-if="view">Edit</button>
+                  <button class="btn btn-success" @click="enable(product)">Enable</button>
+                  <button class="btn btn-danger" @click="disable(product)">Disable</button>
+                  <!-- <button class="btn btn-danger" @click="disable(product)" :disabled="product.disabled">Disable</button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Add Modal -->
+        <div v-if="showAddModal">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <h2>Add New Products</h2>
+              </div>
+
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Product Name</label>
+                  <input type="text" name="name" class="form-control" v-model="newProduct.product_name" >
+                </div>
+
+                <div class="form-group">
+                  <label>Product Description</label>
+                  <input type="text" name="description" class="form-control" v-model="newProduct.product_description" >
+                </div>
+
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" name="qty" class="form-control" v-model="newProduct.quantity" >
+                </div>
+
+                <div class="form-group">
+                  <label>Price</label>
+                  <input type="number" name="price" class="form-control" v-model="newProduct.price" >
+                </div>
+
+              </div>
+
+              <div class="modal-footer">
+                <div class="float-right">
+                  <button class="btn btn-danger" @click="showAddModal = false" >Cancel</button>
+                  <button class="btn btn-success"@click="showAddModal = false; saveProduct()" >Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Edit Modal -->
+
+        <div v-if="showEditModal" >
+          <div class="modal-content">
+            <div class="modal-header bg-primary">
+              <h2>Edit Products</h2>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" name="name" class="form-control" v-model="clickProduct.product_name" >
+              </div>
+
+              <div class="form-group">
+                <label>Product Description</label>
+                <input type="text" name="description" class="form-control" v-model="clickProduct.product_description" >
+              </div>
+
+              <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" name="qty" class="form-control" v-model="clickProduct.quantity" >
+              </div>
+
+              <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" class="form-control" v-model="clickProduct.price" >
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <div class="float-right">
+                <button class="btn btn-danger" @click="showEditModal = false" >Cancel</button>
+                <button class="btn btn-success"@click="showEditModal = false; updateProduct()" >Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <!-- Vuejs -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
